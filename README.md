@@ -16,29 +16,9 @@
 项目参考并使用了 [`jhipster`](https://www.jhipster.tech/) 脚手架生成的基于 `angular` 项目的部分代码，向大家特别推荐该项目，可以快速方便的生成微服务整套系统等，在此不做过多解释。
    
 ## 效果展示
-<div style="text-align: center"><table><tr>
-    <td style="text-align: center">
-        <a href="https://github.com/Zeral-Zhang/manager_system/images/user-manage.png">
-        <img src="./images/user-manage.png" width="500" height="500" />
-        <br />
-        用户管理
-        </a>
-    </td>
-    <td style="text-align: center">
-        <a href="https://github.com/Zeral-Zhang/manager_system/images/role-manage.png">
-        <img src="./images/role-manage.png" width="500" height="500" />
-        <br />
-        角色管理
-        </a>
-    </td>
-    <td style="text-align: center">
-        <a href="https://github.com/Zeral-Zhang/manager_system/images/staff-manage.png">
-        <img src="./images/staff-manage.png" width="500" height="500" />
-        <br />
-            部门/员工管理
-        </a>
-    </td>
-</tr>
+![用户管理](./images/user-manage.png)
+![角色管理](./images/role-manage.png)
+![部门/员工管理](./images/staff-manage.png)
 </table>
 </div>
 
@@ -110,7 +90,7 @@ core
 
 项目只是完成了部分功能，后续开发计划暂无，如有任何技术或非技术问题，请转步到个人博客留言：
 
-> Zeral's Blog: [zeral.top](zeral.top)
+> [Zeral's Blog](http://zeral.top)
 
 
 
