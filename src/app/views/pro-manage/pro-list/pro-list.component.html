@@ -1,0 +1,83 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> 项目列表
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="controls">
+                            <div class="input-group">
+                                <input #search placeholder="输入项目名称..." id="appendedInputButton" [(ngModel)]='currentSearch' (keyup)="onSearch()" class="form-control" size="16" type="text">
+                                <span class="input-group-btn">
+                                        <button (click)="clear()" class="btn btn-secondary" type="button">清空</button>
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-responsive-sm table-hover table-outline mb-0">
+                        <tbody>
+                        <tr *ngFor="let pro of projectsData">
+                            <td class="text-left" width="20%">
+                                <span>{{pro.simpleName}}</span>
+                            </td>
+                            <td width="68%">
+                                <div class="clearfix">
+                                    <div class="float-left">
+                                        <strong>{{pro.percent}}%</strong>
+                                    </div>
+                                    <div class="float-right">
+                                        <small class="text-muted">项目开始日期：{{pro.startTime | date:"yyyy-MM-dd"}}</small>
+                                    </div>
+                                </div>
+                                <div class="progress progress-xs">
+                                    <div *ngIf="pro.state === 0 && pro.percent <= 25" class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width': pro.percent+'%'}"
+                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    <div *ngIf="pro.state === 0 && pro.percent > 25" class="progress-bar bg-info" role="progressbar" [ngStyle]="{'width': pro.percent+'%'}"
+                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    <div *ngIf="pro.state === 1" class="progress-bar bg-danger" role="progressbar" [ngStyle]="{'width': pro.percent+'%'}"
+                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                    <div *ngIf="pro.state === 2" class="progress-bar bg-secondary" role="progressbar" [ngStyle]="{'width': pro.percent+'%'}"
+                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center" width="17%">
+                                <button class="btn btn-outline-info" style="border-radius: 15px" type="button" routerLinkActive="active" [routerLink]="['/pro_manage/proInfo']" [queryParams]="{'id': pro.id, 'percent': pro.percent}" >
+                                    详情
+                                </button>&nbsp;&nbsp;
+                                <button class="btn btn-outline-info" style="border-radius: 15px" type="button"  [routerLink]="['/pro_manage/proTracking']" [queryParams]="{'id': pro.id, 'simpleName': pro.simpleName}">
+                                    跟踪
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <ul class="pagination">
+                        <pagination [totalItems]="totalCount"
+                                    [(ngModel)]="page"
+                                    [itemsPerPage]="itemsPerPage"
+                                    (pageChanged)="pageChanged($event)"
+                                    [boundaryLinks]="true"
+                                    class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                    </ul>
+                </div>
+                <div style="margin-left: 20px">
+                    <p style="font-size: 8px ; color:red">注：绿色表示项目刚开始，蓝色表示进展顺利，红色表示项目计划延期，灰色表示已完成。</p>
+                </div>
+
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-12">
+
+    </div>
+</div>

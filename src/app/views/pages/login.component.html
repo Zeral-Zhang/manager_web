@@ -1,0 +1,63 @@
+<div class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-group">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            <h1>登录</h1>
+                            <p class="text-muted">登录你的账号</p>
+                            <form class="form" role="form" (ngSubmit)="login()" #loginForm="ngForm">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-addon"><i class="icon-user"></i></span>
+                                    <input type="text" class="form-control" name="username" id="username"  #loginInput="ngModel"
+                                           [(ngModel)]="username" placeholder="账户" required>
+                                </div>
+                                <div *ngIf="loginInput.dirty && loginInput.invalid">
+                                    <small class="form-text text-danger" *ngIf="loginInput.errors.required">
+                                        请输入用户名
+                                    </small>
+                                </div>
+                                <div class="input-group mb-4">
+                                    <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                    <input type="password" class="form-control" name="password" id="password" #pwdInput="ngModel"
+                                           [(ngModel)]="password" placeholder="密码" required>
+                                </div>
+                                <div *ngIf="pwdInput.dirty && pwdInput.invalid">
+                                    <small class="form-text text-danger" *ngIf="pwdInput.errors.required">
+                                        请输入密码
+                                    </small>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="rememberMe">
+                                        <input class="form-check-input" type="checkbox" name="rememberMe"
+                                               id="rememberMe" [(ngModel)]="rememberMe" checked>
+                                        <span>记住我</span>
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" [disabled]="loginForm.form.invalid" class="btn btn-primary px-4">登录</button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button type="button" class="btn btn-link px-0">忘记密码?</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+                        <div class="card-body text-center">
+                            <div>
+                                <h2>注册</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.</p>
+                                <button type="button" class="btn btn-primary active mt-3">Register Now!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

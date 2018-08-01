@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card-block border">
+            <ngx-treeview
+                [config]="config"
+                [items]="items"
+                (selectedChange)="onSelectedChange($event)">
+            </ngx-treeview>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card-block border">
+            <div class="form-check form-check-inline" *ngFor="let partmentUser of partmentUsers">
+                <input style="position: absolute; margin-top: 0.25rem;" (change)="selectUser(partmentUser, $event)" type="checkbox" [id]="partmentUser.id">
+                <label class="form-check-label" [for]="partmentUser.id">{{partmentUser.name}}</label>
+            </div>
+        </div>
+    </div>
+</div>

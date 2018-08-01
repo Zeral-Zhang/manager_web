@@ -1,0 +1,193 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> 立项
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal" name="proCreateForm" role="form"  #proCreateForm="ngForm" novalidate>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-1 mt-1 text-sm-left">项 目 名 称<span style="color: #D22E2E">*</span></label>
+                            <div class="col-md-11">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-1 mt-1 text-sm-left">项目负责人<span style="color: #D22E2E">*</span></label>
+                            <div class="col-md-1" *ngFor="let pricipal of principals">
+                                <button type="button" class="btn btn-default">
+                                    {{ pricipal.name }} <span class="fa fa-remove" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-outline-success w-60p mb-1 pull-right" (click)="onSelect(selectUser, 'principal')"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-1 mt-1 text-sm-left">项目参与人<span style="color: #D22E2E">*</span></label>
+                            <div class="col-md-5">
+                                <!--<select class="form-control"  id="power"
+                                        required
+                                        [(ngModel)]="model.power" name="power">
+                                    <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+                                </select>-->
+                                <select class="form-control">
+                                    <option [value]="1111" disabled>所属部门</option>
+                                    <option [value]="1111">1111</option>
+                                    <option [value]="1111">1111</option>
+                                    <option [value]="1111">1111</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <select class="form-control">
+                                    <option [value]="1111" disabled>姓名</option>
+                                    <option [value]="1111">1111</option>
+                                    <option [value]="1111">1111</option>
+                                    <option [value]="1111">1111</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-outline-success w-60p mb-1 pull-right"><i class="fa fa-plus"></i></button>
+                                <!--<button class="btn btn-outline-info" type="button" >-->
+                                <!--<i class="fa fa-plus"></i>-->
+                                <!--</button>-->
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left" *ngFor="let i of data">
+                            <!--<label class="col-md-1 mt-1 text-sm-left">项目参与人<span style="color: #D22E2E">*</span></label>-->
+                            <div class="col-md-1"></div>
+                            <div class="col-md-5">
+                                <!--<select class="form-control"  id="power"
+                                        required
+                                        [(ngModel)]="model.power" name="power">
+                                    <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+                                </select>-->
+                                <select class="form-control">
+                                    <option [value]="1111" disabled>所属部门</option>
+                                    <option [value]="1111">1111</option>
+                                    <option [value]="1111">1111</option>
+                                    <option [value]="1111">1111</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <select class="form-control">
+                                    <option [value]="1111" disabled>姓名</option>
+                                    <option [value]="1111">1111</option>
+                                    <option [value]="1111">1111</option>
+                                    <option [value]="1111">1111</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-outline-danger w-60p mb-1 pull-right" (click)="deleteItem(i)"><i class="fa fa-times"></i></button>
+                                <!--<button class="btn btn-outline-info" type="button" >-->
+                                <!--<i class="fa fa-plus"></i>-->
+                                <!--</button>-->
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-1 mt-1 text-sm-left">项 目 排 程<span style="color: #D22E2E">*</span></label>
+                            <div class="col-md-11">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-1 mt-1 text-sm-left">项目计划书<span style="color: #D22E2E">*</span></label>
+                            <div class="col-md-11">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-1 mt-1 text-sm-left">项 目 描 述<span style="color: #D22E2E">*</span></label>
+                            <div class="col-md-11">
+                                <textarea  class="form-control" style="min-height: 240px"></textarea>
+                            </div>
+                        </div>
+                        <!--<div class="form-group row" style="margin-bottom: 8px">-->
+                        <!--<div class="col-md-8 offset-sm-3" style="margin-bottom: 8px">-->
+                        <!--<button class="btn btn-warning w-60p mb-1 pull-right"  type="button">重置</button>-->
+                        <!--<button class="btn btn-success w-60p mb-1 pull-right" style="margin-right: 10px;" [disabled]="proCreateForm.form.invalid" type="submit">确认</button>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="form-group row text-sm-left">
+                            <!--<label class="col-md-8 mt-1 text-sm-left">项 目 描 述<span style="color: #D22E2E">*</span></label>-->
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <button class="btn btn-outline-success w-60p mb-1 pull-right"  [disabled]="proCreateForm.form.invalid" type="submit">确认</button>
+                                <button class="btn btn-outline-info w-60p mb-1 pull-right" style="margin-right: 10px;">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                    <tabset>
+                        <tab id="BasicInformation" heading="项目基础信息" [disabled]="able1"  [active]="flag1" (select)="projectContent()">
+                            <form class="form-horizontal"  [formGroup]="proCreateForm"  (ngSubmit)="onSubmit(proCreateForm.value)" novalidate >
+                                <div class="form-group row text-sm-left">
+                                    <label class="col-md-1 mt-1 text-sm-left">项 目 名 称<span style="color: #D22E2E">*</span></label>
+                                    <div class="col-md-11">
+                                        <input  formControlName="name" type="text" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row text-sm-left">
+                                    <label class="col-md-1 mt-1 text-sm-left">项 目 简 称<span style="color: #D22E2E">*</span></label>
+                                    <div class="col-md-11">
+                                        <input  formControlName="simpleName" type="text" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row text-sm-left">
+                                    <label class="col-md-1 mt-1 text-sm-left">项目负责人<span style="color: #D22E2E">*</span></label>
+                                    <div class="col-md-11">
+                                        <input input  formControlName="principal" type="text" class="form-control"  required>
+                                    </div>
+                                </div>
+                                <div class="form-group row text-sm-left">
+                                    <label class="col-md-1 mt-1 text-sm-left">项目参与人<span style="color: #D22E2E">*</span></label>
+                                    <div class="col-md-11">
+                                        <input input  formControlName="participants" type="text" class="form-control"  required>
+                                    </div>
+                                </div>
+                                <div class="form-group row text-sm-left">
+                                    <label class="col-md-1 mt-1 text-sm-left">项 目 描 述<span style="color: #D22E2E">*</span></label>
+                                    <div class="col-md-11">
+                                        <textarea  class="form-control" formControlName="des" style="min-height: 240px" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row text-sm-left">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-outline-success w-60p mb-1 pull-right"  [disabled]="proCreateForm.invalid" type="submit">下一步</button>
+                                        <button class="btn btn-outline-info w-60p mb-1 pull-right" style="margin-right: 10px;">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </tab>
+                        <tab heading="项目计划书" [disabled]="able2" [active]="flag2">
+                        </tab>
+                        <tab heading="项目排程" [disabled]="able3" [active]="flag3" (select)="aaa()">
+                        </tab>
+                    </tabset>
+
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+</div>
+
+<!--选人框-->
+<ng-template #selectUser>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">选人</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-select-user (selectedChange)="onSelectedChange($event)"></app-select-user>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addUser()">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalRef.hide()">取消</button>
+    </div>
+</ng-template>
+
+

@@ -1,0 +1,205 @@
+<div class="card-block text-left pt-0 widget-body" style="margin-top: 10px">
+    <button>
+        <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;添加外购件
+    </button>
+</div>
+<div class="flip">
+    <div class="content">
+        <div class="front">
+            <div class="card border-0 box-shadow rounded-0">
+                <div class="card-block pt-3 card-table">
+                    <div widget class="card border-0 box-shadow">
+                        <div class="form-group">
+                            <div class="controls">
+                                <div class="input-group">
+                                    <input #search placeholder="输入外购件简称..." id="appendedInputButton"
+                                           [(ngModel)]='currentSearch' (keyup)="onSearch()" class="form-control"
+                                           size="16" type="text">
+                                    <span class="input-group-btn">
+                                        <button (click)="clear()" class="btn btn-secondary" type="button">清空</button>
+                                     </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table unit-table">
+                                <thead>
+                                <tr style="background-color: #c2cfd6">
+                                    <th>外购件名称</th>
+                                    <th>型号规格</th>
+                                    <th>供应商</th>
+                                    <td>创建时间</td>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let purchase of purchaseData;">
+                                    <td>{{ purchase.name}}</td>
+                                    <td>{{ purchase.type }}</td>
+                                    <td title="{{ purchase.supplier.contactInformation  }}">{{
+                                        purchase.supplier.fullName }}
+                                    </td>
+                                    <td>{{purchase.createTime| date:"yyyy-MM-dd"}}</td>
+                                    <td>
+                                        <span class="fa fa-pencil mr-3 text-primary user-manage"
+                                              (click)="update(addContent,purchase)"></span>
+                                        <span class="fa fa-navicon mr-3 text-primary user-manage"
+                                              (click)="changeType(typeContent,purchase)"></span>
+                                        <span class="fa fa-trash-o text-danger"
+                                              (click)="onDeleteConfirm(purchase, confirmTemplate)"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-12">
+        <pagination [totalItems]="totalCount"
+                    [(ngModel)]="page"
+                    [itemsPerPage]="itemsPerPage"
+                    (pageChanged)="pageChanged($event)"
+                    [boundaryLinks]="true"
+                    class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                    lastText="&raquo;"></pagination>
+    </div>
+</div>
+<!--//添加弹出框-->
+<ng-template #addContent>
+    <div class="modal-body bg-gray role-user" style="padding: 0px;">
+        <div class="row">
+            <div class="col-12" style="margin-left: -8px">
+                <div
+                    style="background-color: #eeeeee;margin-top: -15px; margin-left: -10px; margin-right: -8px; margin-bottom: -24px;">
+                    <div class="row" style="margin-top: -10px">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5" style="margin-top: 10px"></div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <form class="form-horizontal" name="addForm" role="form" (ngSubmit)="onSubmit()" #addForm="ngForm"
+                          novalidate>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-3 mt-1 text-sm-right" for="name">外购件名称<span
+                                style="color: #D22E2E">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="name" name="name"
+                                       #nameInput="ngModel"
+                                       [(ngModel)]="currentPurchase.name" required maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-3 mt-1 text-sm-right" for="type">型号规格<span
+                                style="color: #D22E2E">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="type" name="type" #nameInput="ngModel"
+                                       [(ngModel)]="currentPurchase.type" required maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-3 mt-1 text-sm-right" for="name">供应商</label>
+                            <div class="col-md-8">
+                                <!--  #nameInput="ngModel" -->
+                                <input list="companyList" name="supplierId" [(ngModel)]="currentPurchase.supplierId"
+                                       class="form-control"/>
+                                <datalist id="companyList">
+                                    <option value="{{supplier.id}}" *ngFor="let supplier of supplierData">
+                                        {{supplier.name}}
+                                    </option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="margin-bottom: 8px">
+                            <div class="col-md-8 offset-sm-3" style="margin-bottom: 8px">
+                                <button class="btn btn-default w-60p mb-1 pull-right"
+                                        (click)="closeModal('addContentRef')" type="button">取消
+                                </button>
+                                <button class="btn btn-info w-60p mb-1 pull-right" style="margin-right: 10px;"
+                                        [disabled]="addForm.form.invalid" type="submit">确认
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!--修改类型-->
+<ng-template #typeContent>
+    <div class="modal-body bg-gray role-user" style="padding: 0px;">
+        <div class="row">
+            <div class="col-12" style="margin-left: -8px">
+                <div
+                    style="background-color: #eeeeee;margin-top: -15px; margin-left: -10px; margin-right: -8px; margin-bottom: -24px;">
+                    <div class="row" style="margin-top: -10px">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5" style="margin-top: 10px"></div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <form class="form-horizontal" name="addForm" role="form" (ngSubmit)="onSubmit1()" #addForm="ngForm"
+                          novalidate>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-3 mt-1 text-sm-right" for="Pname">外购件名称<span
+                                style="color: #D22E2E">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="Pname" name="Pname"
+                                       #nameInput="ngModel" readonly [(ngModel)]="currentPurchase.name">
+                            </div>
+                        </div>
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-3 mt-1 text-sm-right" for="type">型号/规格：<span
+                                style="color: #D22E2E">*</span></label>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <div class="custom-controls-stacked">
+                                        <div class="row">
+                                            <div *ngFor="let type of typeData" class="col-md-4"
+                                                 style="font-size: smaller">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input #saveTypeCheckBoxGroup
+                                                           id="saveTypeCheckBoxGroup"
+                                                           type="checkbox"
+                                                           [checked]="type.checked"
+                                                           (change)="saveSpecification(saveTypeCheckBoxGroup.checked,type.id)"
+                                                           value="{{type.content}}"
+                                                           class="custom-control-input checkbox-success"/>
+                                                    <span class="custom-control-indicator"></span>
+                                                    <span
+                                                        class="custom-control-description">{{type.content}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="margin-bottom: 8px">
+                            <div class="col-md-8 offset-sm-3" style="margin-bottom: 8px">
+                                <button class="btn btn-default w-60p mb-1 pull-right"
+                                        (click)="closeModal('typeContent')" type="button">取消
+                                </button>
+                                <button class="btn btn-info w-60p mb-1 pull-right" style="margin-right: 10px;"
+                                        [disabled]="addForm.form.invalid" type="submit">确认
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #confirmTemplate>
+    <div class="modal-body text-center">
+        <p>确认删除?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    </div>
+</ng-template>

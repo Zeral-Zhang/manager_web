@@ -1,0 +1,146 @@
+<!--<div type="grid" class="row">-->
+    <!--<div  class="col-xl-3 col-lg-3 mb-4">-->
+        <!--<button class="btn btn-outline-success template" type="button" (click)="showAddTypeModel(addProjectType)">-->
+            <!--<i class="fa fa-plus"></i>&nbsp;添加模板类型-->
+        <!--</button>-->
+        <!--<div class="flip">-->
+            <!--<div class="content">-->
+                <!--<div class="front">-->
+                    <!--<div class="card border-0 box-shadow rounded-0">-->
+                        <!--<div class="card-header border-0 rounded-0 text-muted" style="background-color:white">-->
+                            <!--<h5 class="mb-0" style="font-size: 16px;color:black;font-weight: bold">-->
+                                <!--模板类型-->
+                            <!--</h5>-->
+                        <!--</div>-->
+                        <!--<div class="card-block pt-3">-->
+                            <!--<div widget class="card border-0 box-shadow">-->
+                                <!--<div class="table-responsive">-->
+                                    <!--<table class="table table-responsive-sm table-hover table-outline mb-0">-->
+                                        <!--<tbody>-->
+                                        <!--<tr  *ngFor="let type of projectTypes">-->
+                                            <!--<td class="text-left" width="80%" (click)="toProjectTemplate(type)">-->
+                                                <!--<span>{{type.projectTypeName}}</span>-->
+                                            <!--</td>-->
+                                            <!--<td class="text-center" width="20%" style="font-size: 18px">-->
+                                                <!--<span class="operType"><a href="javaScript:void(0)"><i class="fa fa-pencil text-primary" (click)="updateType(addProjectType, type)"></i></a></span>-->
+                                                <!--&nbsp;&nbsp;-->
+                                                <!--<span class="operType"><a href="javaScript:void(0)"><i class="fa fa-trash text-danger" (click)="onDeleteType(type, confirmTemplateType)"></i></a></span>-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<pagination [totalItems]="totalCount"-->
+                    <!--[(ngModel)]="pageType"-->
+                    <!--[itemsPerPage]="itemsPerPage"-->
+                    <!--(pageChanged)="pageChangedType($event)"-->
+                    <!--[boundaryLinks]="true"-->
+                    <!--class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>-->
+    <!--</div>-->
+    <!--<div  class="col-xl-9 col-lg-9 mb-4">-->
+        <!--<button class="btn btn-outline-success template" type="button">-->
+            <!--<i class="fa fa-plus"></i>&nbsp;添加模板-->
+        <!--</button>-->
+        <!--<div class="flip">-->
+            <!--<div class="content">-->
+                <!--<div class="front">-->
+                    <!--<div class="card border-0 box-shadow rounded-0">-->
+                        <!--<div class="card-header border-0 rounded-0 text-muted" style="background-color:white">-->
+                            <!--<h5 class="mb-0" style="font-size: 16px;color:black;font-weight: bold">-->
+                                <!--项目计划书模板-->
+                            <!--</h5>-->
+                        <!--</div>-->
+
+                        <!--<div class="card-block pt-3">-->
+                            <!--<div widget class="card border-0 box-shadow">-->
+                                <!--<div class="table-responsive">-->
+                                    <!--<table class="table role-table">-->
+                                        <!--<thead>-->
+                                        <!--<tr style="background-color:  #c2cfd6">-->
+                                            <!--<th  width="48%">模板名称</th>-->
+                                            <!--<th  width="8%">类型</th>-->
+                                            <!--<th  width="8%">创建时间</th>-->
+                                            <!--<th  width="24%">描述</th>-->
+                                            <!--<th  width="10%">操作</th>-->
+                                        <!--</tr>-->
+                                        <!--</thead>-->
+                                        <!--<tbody>-->
+                                        <!--<tr *ngFor="let template of projectTemplates">-->
+                                            <!--<td>{{template.name}}</td>-->
+                                            <!--<td>{{type.projectTypeName}}</td>-->
+                                            <!--<td>{{template.createTime | date:"yyyy-MM-dd"}}</td>-->
+                                            <!--<td>{{template.des}}</td>-->
+                                            <!--<td  style="font-size: 18px">-->
+                                                <!--<span class="operType"><a href="javaScript:void(0)"><i class="fa fa-info text-success"></i></a></span>-->
+                                                <!--&nbsp;&nbsp;-->
+                                                <!--<span class="operType"><a href="javaScript:void(0)"><i class="fa fa-pencil text-primary" ></i></a></span>-->
+                                                <!--&nbsp;&nbsp;-->
+                                                <!--<span class="operType"><a href="javaScript:void(0)"><i class="fa fa-download text-secondary" ></i></a></span>-->
+                                                <!--&nbsp;&nbsp;-->
+                                                <!--<span class="operType"><a href="javaScript:void(0)"><i class="fa fa-trash text-danger" ></i></a></span>-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<pagination [totalItems]="totalCount"-->
+                    <!--[(ngModel)]="pageTemplate"-->
+                    <!--[itemsPerPage]="itemsPerPage"-->
+                    <!--(pageChanged)="pageChangedTemplate($event)"-->
+                    <!--[boundaryLinks]="true"-->
+                    <!--class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<ng-template #addProjectType>-->
+    <!--<div class="modal-body  bg-gray role-user" style="padding: 0px;">-->
+        <!--<div class="row">-->
+            <!--<div class="col-12" style="margin-left: -8px">-->
+                <!--<div style="background-color: #eeeeee;margin-top: -15px; margin-left: -10px; margin-right: -8px; margin-bottom: -24px;">-->
+                    <!--<div class="row" style="margin-top: -10px">-->
+                        <!--<div class="col-md-4"></div>-->
+                        <!--<div class="col-md-5" style="margin-top: 10px"><strong>&#45;&#45;模板类型&#45;&#45;</strong></div>-->
+                        <!--<div class="col-md-3"></div>-->
+                    <!--</div>-->
+                    <!--<form class="form-horizontal" [formGroup]="addTypeForm" (ngSubmit)="OnSubmit(addTypeForm.value)">-->
+                        <!--<input formControlName="id" type="hidden" class="form-control">-->
+                        <!--<div class="form-group row text-sm-left">-->
+                            <!--<label class="col-md-3 form-control-label mt-1 text-sm-right">登录名<span style="color: #D22E2E">*</span></label>-->
+                            <!--<div class="col-md-8">-->
+                                <!--<input formControlName="projectTypeName" type="text" class="form-control">-->
+                                <!--<small class="text-danger"  *ngIf="addTypeForm.controls.projectTypeName.errors?.required">请输入类型名称！</small>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group row" style="margin-bottom: 8px">-->
+                            <!--<div class="col-md-8 offset-sm-3" style="margin-bottom: 8px">-->
+                                <!--<button class="btn btn-warning w-60p mb-1 pull-right" (click)="closeModal('addProjectType')" type="button">取消</button>-->
+                                <!--<button class="btn btn-success w-60p mb-1 pull-right" style="margin-right: 10px;" [disabled]="addTypeForm.invalid" type="submit">确认</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</ng-template>-->
+<!--&lt;!&ndash;删除TYPE&ndash;&gt;-->
+<!--<ng-template #confirmTemplateType>-->
+    <!--<div class="modal-body text-center">-->
+        <!--<h5>删除该类型将会删除该类型下的所有项目模板</h5>-->
+        <!--<p>确认删除吗?</p>-->
+        <!--<button type="button" class="btn btn-default" (click)="confirmType()" >Yes</button>-->
+        <!--<button type="button" class="btn btn-primary" (click)="declineType()" >No</button>-->
+    <!--</div>-->
+<!--</ng-template>-->

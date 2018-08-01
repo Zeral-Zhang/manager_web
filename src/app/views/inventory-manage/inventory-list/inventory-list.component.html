@@ -1,0 +1,161 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+                <div type="grid" class="card-body">
+                    <div class="row">
+                        <div  class="col-xl-3 col-lg-3 mb-4">
+                              <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa fa-align-justify"></i>项目
+                                    </div>
+                                   <div class="flip">
+                                     <div class="content">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <div class="controls">
+                                                            <div class="input-group">
+                                                                <input #search placeholder="输入项目简称..." id="appendedInputButton" [(ngModel)]='currentProSearch' (keyup)="onSearch()" class="form-control" size="16" type="text">
+                                                                <span class="input-group-btn">
+                                                                    <button (click)="clear(0)" class="btn btn-secondary" type="button">清空</button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="list-group" role="tablist">
+                                                        <a *ngFor="let pro of projects;" [class.active]="pro.id === id" href="javascript:void(0)" class="list-group-item list-group-item-action show" (click)="getInventories(pro)" data-toggle="list" role="tab">{{pro.simpleName}}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-block">
+                                                    <pagination [totalItems]="totalCount"
+                                                                [(ngModel)]="page"
+                                                                [itemsPerPage]="itemsPerPage"
+                                                                (pageChanged)="pageChangedProject($event)"
+                                                                [boundaryLinks]="true"
+                                                                class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                                                    </pagination>
+                                                </div>
+                                        </div>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fa fa-align-justify"></i> 项目清单
+                                </div>
+                                <div class="card-block" style="margin-bottom: -25px">
+                                    <button class="btn btn-outline-success template" type="button" (click)="getVensByStatue(1)">
+                                        <i class="fa fa-check"></i>&nbsp;已完成
+                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button class="btn btn-outline-danger template" type="button" (click)="getVensByStatue(0)">
+                                    <i class="fa fa-close "></i>&nbsp;未完成
+                                </button>
+                                </div>
+                                <div class="flip">
+                                    <div class="content">
+                                        <div class="front">
+                                            <div class="card border-0 box-shadow rounded-0">
+                                                <div class="card-block">
+                                                    <div widget class="card border-0 box-shadow">
+                                                        <div class="form-group">
+                                                            <div class="controls">
+                                                                <div class="input-group">
+                                                                    <input #search placeholder="输入清单..." id="appendedInputButton1" [(ngModel)]='currentVenSearch' (keyup)="onSearch1()" class="form-control" size="16" type="text">
+                                                                    <span class="input-group-btn">
+                                                                        <button (click)="clear()" class="btn btn-secondary" type="button">清空</button>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="table-responsive">
+                                                            <table class="table role-table">
+                                                                <thead>
+                                                                <tr style="background-color:  #c2cfd6">
+                                                                    <th  width="48%">名称</th>
+                                                                    <th  width="8%">状态</th>
+                                                                    <th  width="8%">创建时间</th>
+                                                                    <th  width="24%">描述</th>
+                                                                    <th  width="10%">操作</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr *ngFor="let ven of inventories">
+                                                                    <td>{{ven.name}}</td>
+                                                                    <td *ngIf="ven.statue === 0">未完成</td>
+                                                                    <td *ngIf="ven.statue === 1">已完成</td>
+                                                                    <td>{{ven.createTime | date:"yyyy-MM-dd"}}</td>
+                                                                    <td>{{ven.des}}</td>
+                                                                    <td  style="font-size: 18px">
+                                                                        <span class="operType"><a href="javaScript:void(0)"><i class="fa fa-info text-success"></i></a></span>
+                                                                        &nbsp;&nbsp;
+                                                                        <span class="operType"><a href="javaScript:void(0)"><i class="fa fa-pencil text-primary" ></i></a></span>
+                                                                        &nbsp;&nbsp;
+                                                                        <span class="operType"><a href="javaScript:void(0)"><i class="fa fa-download text-secondary" ></i></a></span>
+                                                                        &nbsp;&nbsp;
+                                                                        <span class="operType"><a href="javaScript:void(0)"><i class="fa fa-trash text-danger" ></i></a></span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                    <pagination [totalItems]="totalCount"
+                                                                [(ngModel)]="pageInventory"
+                                                                [itemsPerPage]="itemsPerPage"
+                                                                (pageChanged)="pageChangedInventory($event)"
+                                                                [boundaryLinks]="true"
+                                                                class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!--/.col-->
+</div>
+<ng-template #addProjectType>
+    <div class="modal-body  bg-gray role-user" style="padding: 0px;">
+        <div class="row">
+            <div class="col-12" style="margin-left: -8px">
+                <div style="background-color: #eeeeee;margin-top: -15px; margin-left: -10px; margin-right: -8px; margin-bottom: -24px;">
+                    <div class="row" style="margin-top: -10px">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-5" style="margin-top: 10px"><strong>--模板类型--</strong></div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <form class="form-horizontal" [formGroup]="addTypeForm" (ngSubmit)="OnSubmit(addTypeForm.value)">
+                        <input formControlName="id" type="hidden" class="form-control">
+                        <div class="form-group row text-sm-left">
+                            <label class="col-md-3 form-control-label mt-1 text-sm-right">登录名<span style="color: #D22E2E">*</span></label>
+                            <div class="col-md-8">
+                                <input formControlName="projectTypeName" type="text" class="form-control">
+                                <small class="text-danger"  *ngIf="addTypeForm.controls.projectTypeName.errors?.required">请输入类型名称！</small>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="margin-bottom: 8px">
+                            <div class="col-md-8 offset-sm-3" style="margin-bottom: 8px">
+                                <button class="btn btn-warning w-60p mb-1 pull-right" (click)="closeModal('addProjectType')" type="button">取消</button>
+                                <button class="btn btn-success w-60p mb-1 pull-right" style="margin-right: 10px;" [disabled]="addTypeForm.invalid" type="submit">确认</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!--删除TYPE-->
+<ng-template #confirmTemplateType>
+    <div class="modal-body text-center">
+        <h5>删除该类型将会删除该类型下的所有项目模板</h5>
+        <p>确认删除吗?</p>
+        <button type="button" class="btn btn-default" (click)="confirmType()" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="declineType()" >No</button>
+    </div>
+</ng-template>

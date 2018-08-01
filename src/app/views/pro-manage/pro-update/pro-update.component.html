@@ -1,0 +1,62 @@
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> 项目修改
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="controls">
+                            <div class="input-group">
+                                <input #search placeholder="输入项目名称..." id="appendedInputButton" [(ngModel)]='currentSearch' (keyup)="onSearch()" class="form-control" size="16" type="text">
+                                <span class="input-group-btn">
+                                        <button (click)="clear()" class="btn btn-secondary" type="button">清空</button>
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table role-table">
+                        <thead>
+                        <tr style="background-color:  #c2cfd6">
+                            <th width="45%">项目名称</th>
+                            <th>开始时间</th>
+                            <th>预计完成时间</th>
+                            <th>延期完成时间</th>
+                            <td>状态</td>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let pro of proListData">
+                            <td>{{pro.simpleName}}</td>
+                            <td>{{pro.startTime | date:"yyyy-MM-dd"}}</td>
+                            <td>{{pro.endTime | date:"yyyy-MM-dd"}}</td>
+                            <td>{{pro.delayTime | date:"yyyy-MM-dd"}}</td>
+                            <td *ngIf="pro.state === 0">进行中</td>
+                            <td *ngIf="pro.state === 1">已完成</td>
+                            <td *ngIf="pro.state === 2">延期完成</td>
+                            <td>
+                                <span class="mr-3"><a class="tip tip-top" data-tip="基本信息修改" href="javaScript:void(0)"><i class="fa fa-edit"></i></a></span>
+                                <span class="mr-3"><a class="tip tip-top" data-tip="项目计划修改" href="javaScript:void(0)"><i class="fa fa-calendar"></i></a></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <ul class="pagination">
+                        <pagination [totalItems]="totalCount"
+                                    [(ngModel)]="page"
+                                    [itemsPerPage]="itemsPerPage"
+                                    (pageChanged)="pageChanged($event)"
+                                    [boundaryLinks]="true"
+                                    class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+</div>
+
+

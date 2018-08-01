@@ -1,0 +1,232 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="card-body">
+            <div type="grid" class="row">
+                <div class="col-xl-4 col-lg-4 mb-4">
+                    <div class="card" style="border: none">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 工艺流程
+                            <button class="btn btn-outline-info float-right" type="button" (click)="showAddLineBodyModel(addLineBody)" >
+                                <i class="fa fa-plus"></i>&nbsp;添加工艺
+                            </button>
+                        </div>
+                        <div class="flip" style="margin-top: 15px">
+                            <div class="content">
+                                <div class="front">
+                                    <div class="card border-0 box-shadow rounded-0">
+                                        <div class="card-block pt-3">
+                                            <div widget class="card border-0 box-shadow">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <div class="input-group">
+                                                            <input #search placeholder="输入产品型号..."
+                                                                   id="appendedInputButton"
+                                                                   [(ngModel)]='currentSearch' (keyup)="onSearch()"
+                                                                   class="form-control"
+                                                                   size="16" type="text">
+                                                            <span class="input-group-btn">
+                                                                <button (click)="clear()" class="btn btn-secondary"
+                                                                        type="button">清空</button>
+                                                             </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table
+                                                        class="table table-responsive-sm table-hover table-outline mb-0">
+                                                        <tbody>
+                                                        <tr *ngFor="let line of lineData" [ngStyle]="{'background-color':lineId === line.id ? '#c2cfd6' : '#FFFFFF'}">
+                                                            <td  width="80%" (click)="toProcess(line)">
+                                                                <span>{{line.name}}</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="operType"><a href="javaScript:void(0)">
+                                                                    <i class="fa fa-pencil text-primary"
+                                                                    (click)="showUpdateLineBodyModel(line, addLineBody)"></i></a></span>
+                                                                &nbsp;&nbsp;
+                                                                <span class="operType"><a  href="javaScript:void(0)">
+                                                                    <i class="fa fa-trash text-danger"
+                                                                       (click)="onDeleteLine(line, confirmTemplate)"></i></a></span>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-left: 15px;">
+                            <pagination [totalItems]="totalCount"
+                                        [(ngModel)]="pageLine"
+                                        [itemsPerPage]="itemsPerPage"
+                                        (pageChanged)="pageChangedLine($event)"
+                                        [boundaryLinks]="true"
+                                        class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;"
+                                        firstText="&laquo;" lastText="&raquo;"></pagination>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-8 mb-4">
+                    <div class="card" style="border: none">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 工序
+                            <button class="btn btn-outline-info float-right" type="button" (click)="showUpdateLineBodyProcessModel(updateLineBodyProcess)">
+                                <i class="fa fa-plus"></i>&nbsp;添加工序
+                            </button>
+                        </div>
+                        <div class="flip" style="margin-top: 15px">
+                            <div class="content">
+                                <div class="front">
+                                    <div class="card border-0 box-shadow rounded-0">
+                                        <div class="card-block pt-3">
+                                            <div widget class="card border-0 box-shadow">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead class="thead-light">
+                                                        <tr>
+                                                            <th>名称</th>
+                                                            <th>顺序</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr *ngFor="let process of processData">
+                                                            <td width="75%">{{process.process.name}}</td>
+                                                            <td width="10%">{{process.sort}}</td>
+                                                            <td width="15%">
+                                                                <span>
+                                                                    <a href="javaScript:void(0)">
+                                                                        <i class="fa fa-arrow-down" (click)="updateSort(0, process)">
+                                                                        </i>
+                                                                    </a>
+                                                                </span>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <span>
+                                                                    <a  href="javaScript:void(0)">
+                                                                        <i class="fa fa-arrow-up" (click)="updateSort(1, process)">
+                                                                        </i>
+                                                                    </a>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-left: 15px;">
+                            <pagination [totalItems]="totalCount"
+                                        [(ngModel)]="pageProcess"
+                                        [itemsPerPage]="itemsPerPage"
+                                        (pageChanged)="pageChangedProcess($event)"
+                                        [boundaryLinks]="true"
+                                        class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;"
+                                        firstText="&laquo;" lastText="&raquo;"></pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #addLineBody>
+    <div class="modal-header">
+        <h4 class="modal-title">工艺流程新增</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('addLineBody')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-horizontal" [formGroup]="addLineForm" (ngSubmit)="OnSubmit(addLineForm.value)" novalidate>
+        <div class="modal-body">
+            <div class="card" style="margin-bottom: 0">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>名称<span style="color: #D22E2E">*</span></label>
+                        <input type="hidden" formControlName="id">
+                        <input formControlName="name" type="text" class="form-control">
+                        <div *ngIf="addLineForm.controls.name.errors?.required">
+                            <small class="text-danger"
+                            >请输入工艺流程名称！
+                            </small>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default btn-primary" [disabled]="addLineForm.invalid"><i
+                class="fa fa-dot-circle-o"></i> 确认
+            </button>
+            <button type="reset" class="btn btn-default" (click)="closeModal('addLineBody')"><i
+                class="fa fa-ban"></i> 取消
+            </button>
+        </div>
+    </form>
+</ng-template>
+<ng-template #updateLineBodyProcess>
+    <div class="modal-header">
+        <h4 class="modal-title">工艺流程——新增工序</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('updateLineBodyProcess')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="card" style="margin-bottom: 0">
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="controls">
+                        <div class="input-group">
+                            <input #search placeholder="输入产品型号..."
+                                   id="appendedInputButton1"
+                                   [(ngModel)]='currentSearchName' (keyup)="onSearch1(0)"
+                                   class="form-control"
+                                   size="16" type="text">
+                            <span class="input-group-btn">
+                    <button (click)="clear()" class="btn btn-secondary"
+                            type="button">清空</button>
+                 </span>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th></th>
+                        <th>工序名称</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let value of data">
+                        <th scope="row">
+                            <!--<input type="checkbox" [(ngModel)]="role.checked" value="{{role.code}}" title="选择角色"/>-->
+                            <input type="checkbox" title="选择工序"/>
+                        </th>
+                        <td>{{value.name}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-default btn-primary"(click)="updateLineBodyProcess()"><i class="fa fa-dot-circle-o"></i> 确认</button>
+        <button type="reset" class="btn btn-default" (click)="closeModal('updateLineBodyProcess')"><i class="fa fa-ban"></i> 取消</button>
+    </div>
+</ng-template>
+<!--删除TYPE-->
+<ng-template #confirmTemplate>
+    <div class="modal-body text-center">
+        <p>确认删除吗?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    </div>
+</ng-template>

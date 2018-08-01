@@ -1,0 +1,128 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <i class="fa fa-align-justify mr-3"></i> 部门管理
+                    <button class="btn btn-outline-info mt-0 ml-auto px-4" type="button" (click)="addDepartment(addDepartContent)">
+                        <i class="fa fa-plus"></i> 添加部门
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>部门名称</th>
+                            <th>是否有子部门</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let department of departmentData;">
+                            <td>{{ department.id }}</td>
+                            <td>{{department.name}}</td>
+                            <td>{{department.hasSon ? (department.hasSon == 1 ? '是' : '否') : '未填写'}}</td>
+                            <td>{{department.createTime| date:"yyyy-MM-dd"}}</td>
+                            <td>
+                                <span class="fa fa-pencil mr-3 text-primary user-manage" (click)="updateDepartment(addUserContent,user)"></span>
+                                <span class="fa fa-trash-o text-danger" (click)="onDeleteConfirm(user, confirmTemplate)"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <ul class="pagination">
+                        <pagination [totalItems]="totalCount"
+                                    [itemsPerPage]="itemsPerPage"
+                                    (pageChanged)="pageChanged($event)"
+                                    [boundaryLinks]="true"
+                                    class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+</div>
+
+<!--//添加用户弹出框-->
+<ng-template #addDepartContent>
+    <div class="modal-header">
+        <h4 class="modal-title">新增部门</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('addDepartContent')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-horizontal" name="addForm" role="form" (ngSubmit)="onSubmit()" #addForm="ngForm" novalidate>
+        <div class="modal-body">
+            <div class="card" style="margin-bottom: 0">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="login">部门名称</label>
+                        <input type="text" class="form-control" id="name" name="name" #nameInput="ngModel"
+                               [(ngModel)]="selectDepartment.name" required minlength="3" maxlength="50" >
+                        <div *ngIf="nameInput.dirty && nameInput.invalid">
+                            <small class="form-text text-danger" *ngIf="nameInput.errors.required">
+                                部门名称不能为空！
+                            </small>
+                            <small class="form-text text-danger" *ngIf="nameInput.errors.minlength">
+                                部门名称至少为3位！
+                            </small>
+                            <small class="form-text text-danger" *ngIf="nameInput.errors.maxlength">
+                                部门名称最长50位！
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default btn-primary"  [disabled]="addForm.form.invalid"><i class="fa fa-dot-circle-o"></i> 确认</button>
+            <button type="reset" class="btn btn-default" (click)="closeModal('addUserContent')"><i class="fa fa-ban"></i> 取消</button>
+        </div>
+    </form>
+</ng-template>
+<!--弹出角色-->
+<ng-template #roleContent>
+    <div class="modal-header">
+        <h4 class="modal-title">用户角色</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('roleContent')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card" style="margin-bottom: 0">
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>部门名称</th>
+                        <th>是否有子部门</th>
+                        <th>创建时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let department of departmentData;">
+                            <td>{{department.name}}</td>
+                            <td>{{department.hasSon ? (department.hasSon == 1 ? '是' : '否') : '未填写'}}</td>
+                            <td>{{department.createTime| date:"yyyy-MM-dd"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-default btn-primary"(click)="updateUserRoleInfo()"><i class="fa fa-dot-circle-o"></i> 确认</button>
+        <button type="reset" class="btn btn-default" (click)="closeModal('roleContent')"><i class="fa fa-ban"></i> 取消</button>
+    </div>
+</ng-template>
+<ng-template #confirmTemplate>
+    <div class="modal-body text-center">
+        <p>确认删除?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+    </div>
+</ng-template>
+

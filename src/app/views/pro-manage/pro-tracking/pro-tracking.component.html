@@ -1,0 +1,209 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> 项目跟踪
+                    <button class="btn btn-outline-info float-right" type="button" routerLinkActive="active"
+                            [routerLink]="['/pro_manage/proList']">
+                        <i class="fa fa-mail-reply"></i>&nbsp;&nbsp;&nbsp;返回
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-1">
+                        <div class="col">
+                            <div class="form-group">
+                                <p style="font-size: 20px; color: black">
+                                    项目名称：{{proName}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div type="grid" class="row">
+                        <div class="col-xl-2 col-lg-2 mb-4">
+                            <div class="flip">
+                                <div class="content">
+                                    <div class="front">
+                                        <div class="card border-0 box-shadow rounded-0">
+                                            <div class="card-block pt-3" style="border: double;border-color: #CED7DB;   text-align: center;">
+                                                <div widget class="card border-0 box-shadow">
+                                                    <div class="table-responsive">
+                                                        <table
+                                                            class="table table-responsive-sm table-hover table-outline mb-0">
+                                                            <tbody>
+                                                            <tr *ngFor="let dep of depData">
+                                                                <td class="text-left"
+                                                                    [ngStyle]="{'background-color':depId === dep.id ? '#2c312c36' : '#FFFFFF'}"
+                                                                    (click)="selectedDep(dep, 0)">{{dep.name}}
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <pagination [totalItems]="totalCount"
+                                                            [(ngModel)]="pageDep"
+                                                            [itemsPerPage]="itemsPerPage"
+                                                            (pageChanged)="depPageChange($event)"
+                                                            [boundaryLinks]="true"
+                                                            class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;"
+                                                            firstText="&laquo;"
+                                                            lastText="&raquo;"></pagination>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xl-10 col-lg-10 mb-4">
+                            <button class="btn btn-outline-success template" type="button" (click)="toPlan(2)">
+                                <i class="fa fa-check-circle"></i>&nbsp;已完成事项
+                            </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-outline-danger template" type="button" (click)="toPlan(1)">
+                                <i class="fa fa-check-circle-o"></i>&nbsp;待办事项
+                            </button>
+                            <div class="flip" *ngIf="n === 1">
+                                <div class="content">
+                                    <div class="front">
+                                        <div class="card border-0 box-shadow rounded-0">
+                                            <!--<div class="card-header border-0 rounded-0 text-muted"-->
+                                                 <!--style="background-color:white">-->
+                                                <!--<p class="mb-0" style="font-size: 16px;color:black;margin-left: -20px">-->
+                                                    <!--待办事项-->
+                                                <!--</p>-->
+                                            <!--</div>-->
+                                            <div class="card-block pt-3">
+                                                <div widget class="card border-0 box-shadow" style="margin-left: -20px">
+                                                    <div class="table-responsive">
+                                                        <table class="table role-table">
+                                                            <thead>
+                                                            <tr style="background-color:  #c2cfd6">
+                                                                <th width="45%">事件名称</th>
+                                                                <th>预计开始时间</th>
+                                                                <th>预计完成时间</th>
+                                                                <th>延期完成时间</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr *ngFor="let plan of falsePlanData"
+                                                                [ngStyle]="{'background-color':plan.delayTime === null ? '#FFFFFF' : 'red'}">
+                                                                <td>{{plan.name}}</td>
+                                                                <td>{{plan.startTime | date:"yyyy-MM-dd"}}</td>
+                                                                <td>{{plan.endTime | date:"yyyy-MM-dd"}}</td>
+                                                                <td>{{plan.delayTime | date:"yyyy-MM-dd"}}</td>
+                                                                <td>操作</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <pagination [totalItems]="totalCount"
+                                            [(ngModel)]="pageFalse"
+                                            [itemsPerPage]="itemsPerPage"
+                                            (pageChanged)="pageFalseChanged($event)"
+                                            [boundaryLinks]="true"
+                                            class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;"
+                                            firstText="&laquo;"
+                                            lastText="&raquo;"></pagination>
+                            </div>
+                            <div class="flip" *ngIf="n === 2">
+                                <div class="content">
+                                    <div class="front">
+                                        <div class="card border-0 box-shadow rounded-0">
+                                            <!--<div class="card-header border-0 rounded-0 text-muted"-->
+                                                 <!--style="background-color:white">-->
+                                                <!--<p class="mb-0" style="font-size: 16px;color:black;margin-left: -20px">-->
+                                                    <!--已办事项-->
+                                                <!--</p>-->
+                                            <!--</div>-->
+                                            <div class="card-block pt-3">
+                                                <div widget class="card border-0 box-shadow"  style="margin-left: -20px">
+                                                    <div class="table-responsive">
+                                                        <table class="table role-table">
+                                                            <thead>
+                                                            <tr style="background-color:  #c2cfd6">
+                                                                <th width="50%">事件名称</th>
+                                                                <th>预计完成时间</th>
+                                                                <th>实际完成时间</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr *ngFor="let plan of successPlanData">
+                                                                <td>{{plan.name}}</td>
+                                                                <td>{{plan.endTime | date:"yyyy-MM-dd"}}</td>
+                                                                <td>{{plan.actualTime | date:"yyyy-MM-dd"}}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <pagination [totalItems]="totalCount"
+                                            [(ngModel)]="pageSuccess"
+                                            [itemsPerPage]="itemsPerPage"
+                                            (pageChanged)="pageSuccessChanged($event)"
+                                            [boundaryLinks]="true"
+                                            class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;"
+                                            firstText="&laquo;"
+                                            lastText="&raquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+</div>
+
+
+<!--<ng-template #addProjectType>-->
+<!--<div class="modal-body  bg-gray role-user" style="padding: 0px;">-->
+<!--<div class="row">-->
+<!--<div class="col-12" style="margin-left: -8px">-->
+<!--<div style="background-color: #eeeeee;margin-top: -15px; margin-left: -10px; margin-right: -8px; margin-bottom: -24px;">-->
+<!--<div class="row" style="margin-top: -10px">-->
+<!--<div class="col-md-4"></div>-->
+<!--<div class="col-md-5" style="margin-top: 10px"><strong>&#45;&#45;模板类型&#45;&#45;</strong></div>-->
+<!--<div class="col-md-3"></div>-->
+<!--</div>-->
+<!--<form class="form-horizontal" [formGroup]="addTypeForm" (ngSubmit)="OnSubmit(addTypeForm.value)">-->
+<!--<input formControlName="id" type="hidden" class="form-control">-->
+<!--<div class="form-group row text-sm-left">-->
+<!--<label class="col-md-3 form-control-label mt-1 text-sm-right">登录名<span style="color: #D22E2E">*</span></label>-->
+<!--<div class="col-md-8">-->
+<!--<input formControlName="projectTypeName" type="text" class="form-control">-->
+<!--<small class="text-danger"  *ngIf="addTypeForm.controls.projectTypeName.errors?.required">请输入类型名称！</small>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group row" style="margin-bottom: 8px">-->
+<!--<div class="col-md-8 offset-sm-3" style="margin-bottom: 8px">-->
+<!--<button class="btn btn-warning w-60p mb-1 pull-right" (click)="closeModal('addProjectType')" type="button">取消</button>-->
+<!--<button class="btn btn-success w-60p mb-1 pull-right" style="margin-right: 10px;" [disabled]="addTypeForm.invalid" type="submit">确认</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</ng-template>-->
+<!--&lt;!&ndash;删除TYPE&ndash;&gt;-->
+<!--<ng-template #confirmTemplateType>-->
+<!--<div class="modal-body text-center">-->
+<!--<h5>删除该类型将会删除该类型下的所有项目模板</h5>-->
+<!--<p>确认删除吗?</p>-->
+<!--<button type="button" class="btn btn-default" (click)="confirmType()" >Yes</button>-->
+<!--<button type="button" class="btn btn-primary" (click)="declineType()" >No</button>-->
+<!--</div>-->
+<!--</ng-template>-->

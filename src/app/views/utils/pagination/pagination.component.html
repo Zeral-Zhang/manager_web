@@ -1,0 +1,104 @@
+<!--<div style="width: 100px">
+<div class="spinner" >
+  <div class="spinner-container container1">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+    <div class="circle4"></div>
+  </div>
+  <div class="spinner-container container2">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+    <div    class="circle4"></div>
+  </div>
+  <div class="spinner-container container3">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+    <div class="circle4"></div>
+  </div>
+</div>
+</div>-->
+<!--<div id="infoLoad" style="display: none">
+  <div class="spinner"></div>
+</div>
+<div class="pagination" *ngIf="count > 0">
+  <div class="description" style="line-height: 33px">
+    <span class="page-counts">{{ getMin() }} - {{ getMax() }} 共 {{ count }}条</span>
+  </div>
+  <div class="numbers">
+    <button class="link" class="btn btn-secondary btn-rounded" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }">&lt; <</button>
+
+    <button class="btn btn-secondary btn-rounded"
+      *ngFor="let pageNum of getPages()"
+      (click)="onPage(pageNum)"
+      [ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button>
+    <button class="link" class="btn btn-secondary btn-rounded" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">> &gt;</button>
+  </div>
+  <div class="description" style="line-height: 33px">
+    <span class="page-totals">共{{ totalPages() }} 页</span>
+  </div>
+</div>-->
+<div class="row" id="bigStyle" style="margin-top: 10px;text-align: center">
+  <div class="col-12">
+    <div class="bg-white">
+      <div style="text-align:center;">
+        <ul class="pagination pagination-md" style="float:right;">
+          <div class="description" style="line-height: 33px"><!--{{ getMin() }} - {{ getMax() }}-->
+            <span class="page-counts"> 共 {{ count }}条</span>&nbsp;&nbsp;
+          </div>
+          <li class="page-item disabled" style="text-align: center">
+            <button  class="btn btn-secondary" (click)="onPage(1)" >首页</button>
+          </li>
+          <li class="page-item disabled" style="text-align: center">
+            <button  class="btn btn-secondary" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }"><</button>
+          </li>
+          <li class="page-item" style="text-align: center">
+            <button class="btn btn-secondary"
+                                        *ngFor="let pageNum of getPages()"
+                                        (click)="onPage(pageNum)"
+                                        [ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button></li>
+          <li class="page-item" style="text-align: center">
+            <button class="link" class="btn btn-secondary" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">></button>
+          </li>
+          <li class="page-item" style="text-align: center">
+            <button class="link" class="btn btn-secondary" (click)="onPage(totalPages())">尾页</button>
+          </li>
+          <div class="description" style="line-height: 33px">
+            &nbsp;&nbsp;<span class="page-totals">第{{ page }}/{{ totalPages() }} 页</span>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--小设备简易菜单-->
+<div class="row" id="smallStyle" style="margin-top: 10px;text-align: center">
+  <div class="col-12">
+    <div class="bg-white">
+      <div style="text-align:center;">
+        <ul class="pagination pagination-md" style="float:right;">
+          <li class="page-item disabled" style="text-align: center">
+            <button  class="btn btn-secondary" (click)="onPage(1)" >首页</button>
+          </li>
+          <li class="page-item disabled" style="text-align: center">
+            <button  class="btn btn-secondary" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }"><</button>
+          </li>
+          <li class="page-item" style="text-align: center">
+            <button class="link" class="btn btn-secondary" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">{{page}}</button>
+          </li>
+          <li class="page-item" style="text-align: center">
+            <button class="link" class="btn btn-secondary" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">></button>
+          </li>
+          <li class="page-item" style="text-align: center">
+            <button class="link" class="btn btn-secondary" (click)="onPage(totalPages())">尾页</button>
+          </li>
+          <div class="description" style="line-height: 33px">
+            &nbsp;&nbsp;<span class="page-totals">第{{ page }}/{{ totalPages() }} 页</span>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

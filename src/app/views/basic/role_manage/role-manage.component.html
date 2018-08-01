@@ -1,0 +1,177 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <i class="fa fa-align-justify mr-3"></i> 角色管理
+                    <button class="btn btn-outline-info mt-0 ml-auto px-4" type="button" (click)="showAddRoleModal(addRole)">
+                        <i class="fa fa-plus"></i> 添加角色
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="controls">
+                            <div class="input-group">
+                                <input #search placeholder="输入角色名称..." id="appendedInputButton" [(ngModel)]='currentSearch' (keyup)="onSearch()" class="form-control" size="16" type="text">
+                                <span class="input-group-btn">
+                                        <button (click)="clear()" class="btn btn-secondary" type="button">清空</button>
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>编号</th>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let role of roleData">
+                            <td>{{role.code}}</td>
+                            <td>{{role.name}}</td>
+                            <td>{{role.describe}}</td>
+                            <td>
+                                <span class="fa fa-users staff text-success" (click)="toMenus(role.code,roleManModalContent)"></span>
+                                <span class="fa fa-pencil mr-3 text-primary role-manage" (click)="showUpdateRoleModal(role, updateRole)"></span>
+                                <span class="fa fa-trash-o text-danger" (click)="onDeleteConfirm(role.code, confirmTemplate)"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <ul class="pagination">
+                        <pagination [totalItems]="totalCount"
+                                    [(ngModel)]="page"
+                                    [itemsPerPage]="itemsPerPage"
+                                    (pageChanged)="pageChanged($event)"
+                                    [boundaryLinks]="true"
+                                    class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+</div>
+
+
+<!--//添加角色弹出框-->
+<ng-template #addRole>
+    <div class="modal-header">
+        <h4 class="modal-title">编辑角色</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('addRole')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-horizontal" name="addRoleForm" role="form" (ngSubmit)="addRoleOnSubmit()" #addRoleForm="ngForm" novalidate>
+        <div class="modal-body">
+            <div class="card" style="margin-bottom: 0">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="code">编号<span style="color: #D22E2E">*</span></label>
+                        <input type="text" class="form-control" placeholder="请输入英文名称，例如：admin" id="code" name="code" #codeInput="ngModel"
+                               [(ngModel)]="addRoleData.code" required>
+                        <div *ngIf="codeInput.dirty && codeInput.invalid">
+                            <small class="form-text text-danger" *ngIf="codeInput.errors.required">
+                                编号不能为空！
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">名称<span style="color: #D22E2E">*</span></label>
+                        <input id="name" type="text" class="form-control" name="name" #nameInput="ngModel"
+                               [(ngModel)]="addRoleData.name" required>
+                        <div *ngIf="nameInput.dirty && nameInput.invalid">
+                            <small class="form-text text-danger" *ngIf="nameInput.errors.required">
+                                名称不能为空！
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="describe">描述</label>
+                        <input id="describe" type="text" class="form-control" name="describe" #describeInput="ngModel"
+                               [(ngModel)]="addRoleData.describe" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default btn-primary"  [disabled]="addRoleForm.form.invalid" ><i class="fa fa-dot-circle-o"></i> 确认</button>
+            <button type="reset" class="btn btn-default" (click)="closeModal('addRole')" ><i class="fa fa-ban"></i> 取消</button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #updateRole>
+    <div class="modal-header">
+        <h4 class="modal-title">修改角色</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('updateRole')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-horizontal"  name="updateRoleForm" role="form" (ngSubmit)="updateOnSubmit()" #updateRoleForm="ngForm" novalidate>
+        <div class="modal-body">
+            <div class="card" style="margin-bottom: 0">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label  for="updateCode">编号<span style="color: #D22E2E">*</span></label>
+                        <input type="text" class="form-control" id="updateCode" name="code"
+                               [(ngModel)]="updateRoleDta.code" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateName">名称<span style="color: #D22E2E">*</span></label>
+                        <input id="updateName" type="text" class="form-control" name="name" #nameInput="ngModel"
+                               [(ngModel)]="updateRoleDta.name" required>
+                        <div *ngIf="nameInput.dirty && nameInput.invalid">
+                            <small class="form-text text-danger" *ngIf="nameInput.errors.required">
+                                名称不能为空！
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateDescribe">描述</label>
+                        <input id="updateDescribe" type="text" class="form-control" name="describe" #describeInput="ngModel"
+                               [(ngModel)]="updateRoleDta.describe" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default btn-primary" [disabled]="updateRoleForm.form.invalid" ><i class="fa fa-dot-circle-o"></i> 确认</button>
+            <button type="reset" class="btn btn-default" (click)="closeModal('updateRole')" ><i class="fa fa-ban"></i> 取消</button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #confirmTemplate>
+    <div class="modal-body text-center">
+        <p>确认删除?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+        <button type="button" class="btn btn-info" (click)="decline()" >No</button>
+    </div>
+</ng-template>
+
+<ng-template #roleManModalContent>
+    <div class="modal-header">
+        <h4 class="modal-title">管理角色菜单</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('roleContent')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="card-block pt-3 role-user">
+        <div widget class="card border-0 box-shadow">
+            <div class="table-responsive role-tree">
+                <ngx-treeview [config]="config" [items]="items" (selectedChange)="values = $event"></ngx-treeview>
+                <!--结束-->
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-primary" (click)="updateRoleMenus()" ><i
+            class="fa fa-dot-circle-o"></i> 确认
+        </button>
+        <button type="button" class="btn btn-default" (click)="closeModal('roleContent')" ><i class="fa fa-ban"></i> 取消</button>
+    </div>
+</ng-template>

@@ -1,0 +1,193 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <i class="fa fa-align-justify mr-3"></i> 用户管理
+                    <button class="btn btn-outline-info mt-0 ml-auto px-4" type="button" (click)="showAddUserModal(addUserContent)">
+                        <i class="fa fa-plus"></i> 添加用户
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="controls">
+                            <div class="input-group">
+                                <input #search placeholder="输入用户名..." id="appendedInputButton" [(ngModel)]='currentSearch' (keyup)="onSearch()" class="form-control" size="16" type="text">
+                                <span class="input-group-btn">
+                                <button (click)="clear()" class="btn btn-secondary" type="button">清空</button>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>账号</th>
+                                <th>用户名</th>
+                                <th>性别</th>
+                                <th>所在部门</th>
+                                <th>电话</th>
+                                <th>电子邮件</th>
+                                <th>加入时间</th>
+                                <th>操作人</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let user of userData;">
+                            <td>{{user.login}}</td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.gender === 0 ? '女':'男'}}</td>
+                            <td>{{user.department?.name}}</td>
+                            <td>{{user.phone}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{ user.createdDate| date:"yyyy-MM-dd"}}</td>
+                            <td>{{user.lastModifiedBy}}</td>
+                            <td>
+                                <span class="fa fa-users staff text-success" (click)="getRole(user, roleContent)"></span>
+                                <span class="fa fa-pencil mr-3 text-primary user-manage" (click)="updateUser(addUserContent,user)"></span>
+                                <span class="fa fa-trash-o text-danger" (click)="onDeleteConfirm(user, confirmTemplate)"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <ul class="pagination">
+                        <pagination [totalItems]="totalCount"
+                                    [itemsPerPage]="itemsPerPage"
+                                    (pageChanged)="pageChanged($event)"
+                                    [boundaryLinks]="true"
+                                    class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+</div>
+
+<!--//添加用户弹出框-->
+<ng-template #addUserContent>
+    <div class="modal-header">
+        <h4 class="modal-title">新增用户</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('addUserContent')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-horizontal" name="addForm" role="form" (ngSubmit)="onSubmit()" #addForm="ngForm" novalidate>
+        <div class="modal-body">
+            <div class="card" style="margin-bottom: 0">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="login">登录名</label>
+                        <input type="text" class="form-control" id="login" name="login" #loginInput="ngModel"
+                               [(ngModel)]="currentUser.login" required minlength="3" maxlength="50" id="company">
+                        <div *ngIf="loginInput.dirty && loginInput.invalid">
+                            <small class="form-text text-danger" *ngIf="loginInput.errors.required">
+                                登录名不能为空！
+                            </small>
+                            <small class="form-text text-danger" *ngIf="loginInput.errors.minlength">
+                                登录名至少为3位！
+                            </small>
+                            <small class="form-text text-danger" *ngIf="loginInput.errors.maxlength">
+                                登录名最长50位！
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" class="form-control" id="name" name="name" #nameInput="ngModel"
+                               [(ngModel)]="currentUser.name" required>
+                        <div *ngIf="nameInput.dirty && nameInput.invalid">
+                            <small class="form-text text-danger" *ngIf="nameInput.errors.required">
+                                姓名不能为空！
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group row form-inline">
+                        <label class="col-md-2 col-form-label">性别</label>
+                        <label class="col-md-4 custom-control custom-radio">
+                            <input type="radio" name="gender" [value]="1" [(ngModel)]="currentUser.gender" class="custom-control-input radio-info">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">男</span>
+                        </label>
+                        <label class="col-md-4 custom-control custom-radio">
+                            <input type="radio" name="gender" [value]="0" [(ngModel)]="currentUser.gender" class="custom-control-input radio-info">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">女</span>
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-8">
+                            <label for="phone">职称</label>
+                            <input id="jobTitle" name="jobTitle" type="text" class="form-control" [(ngModel)]="currentUser.jobTitle">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="phone">职位</label>
+                            <input id="position" name="position" type="text" class="form-control" [(ngModel)]="currentUser.position">
+                        </div>
+                    </div><!--/.row-->
+                    <div class="form-group">
+                        <label for="phone">电话</label>
+                        <input id="phone" name="phone" type="text" class="form-control" [(ngModel)]="currentUser.phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">电子邮件</label>
+                        <input id="email" name="email" #emailInput="ngModel" type="email" class="form-control" [(ngModel)]="currentUser.email" email>
+                        <div *ngIf="emailInput.dirty && emailInput.invalid">
+                            <small class="form-text text-danger" *ngIf="emailInput.errors.email">
+                                邮箱格式不正确！
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default btn-primary"  [disabled]="addForm.form.invalid"><i class="fa fa-dot-circle-o"></i> 确认</button>
+            <button type="reset" class="btn btn-default" (click)="closeModal('addUserContent')"><i class="fa fa-ban"></i> 取消</button>
+        </div>
+    </form>
+</ng-template>
+<!--弹出角色-->
+<ng-template #roleContent>
+    <div class="modal-header">
+        <h4 class="modal-title">用户角色</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal('roleContent')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card" style="margin-bottom: 0">
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th></th>
+                            <th>角色名称</th>
+                            <th>角色描述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let role of roles;">
+                        <th scope="row">
+                            <input type="checkbox" [(ngModel)]="role.checked" value="{{role.code}}" title="选择角色"/>
+                        </th>
+                        <td>{{role.name}}</td>
+                        <td>{{role.describe}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-default btn-primary"(click)="updateUserRoleInfo()"><i class="fa fa-dot-circle-o"></i> 确认</button>
+        <button type="reset" class="btn btn-default" (click)="closeModal('roleContent')"><i class="fa fa-ban"></i> 取消</button>
+    </div>
+</ng-template>
+<ng-template #confirmTemplate>
+    <div class="modal-body text-center">
+        <p>确认删除?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+    </div>
+</ng-template>

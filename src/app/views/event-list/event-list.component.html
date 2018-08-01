@@ -1,0 +1,81 @@
+<div class="animated fadeIn">
+    <div class="card" *ngIf="flag === 0">
+        <div class="card-header">
+            <i class="fa fa-align-justify"></i>    所有代办事宜
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table user-table">
+                    <thead>
+                    <tr style="background-color: #c2cfd6">
+                        <th>项目简称</th>
+                        <th>部门</th>
+                        <th>事项名称</th>
+                        <th>预计结束时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let value of falseEventData">
+                        <td>{{value.project.simpleName}}</td>
+                        <td>{{value.department.name}}</td>
+                        <td>{{value.name}}</td>
+                        <td>{{value.endTime| date:"yyyy-MM-dd HH:mm:SS"}}</td>
+                        <td  style="font-size: 18px">
+                            <span class="operType"><a href="javaScript:void(0)"><i class="fa fa-info text-success"></i></a></span>
+                            &nbsp;&nbsp;
+                            <span class="operType"><a href="javaScript:void(0)"><i class="fa fa-pencil text-primary" ></i></a></span>
+                            &nbsp;&nbsp;
+                            <span class="operType"><a href="javaScript:void(0)"><i class="fa fa-download text-secondary" ></i></a></span>
+                            &nbsp;&nbsp;
+                            <span class="operType"><a href="javaScript:void(0)"><i class="fa fa-trash text-danger" ></i></a></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <pagination [totalItems]="totalCount"
+                                [itemsPerPage]="itemsPerPage"
+                                (pageChanged)="fPageChanged($event)"
+                                [boundaryLinks]="true"
+                                class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="flag === 1">
+        <div class="card-header">
+            <i class="fa fa-align-justify"></i>     所有已完成事宜
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table user-table">
+                    <thead>
+                    <tr style="background-color: #c2cfd6">
+                        <th>项目简称</th>
+                        <th>部门</th>
+                        <th>事项名称</th>
+                        <th>结束时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let value of successEventData">
+                        <td>{{value.project.simpleName}}</td>
+                        <td>{{value.department.name}}</td>
+                        <td>{{value.name}}</td>
+                        <td>{{value.actualTime| date:"yyyy-MM-dd HH:mm:SS"}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <pagination [totalItems]="totalCount"
+                                [itemsPerPage]="itemsPerPage"
+                                (pageChanged)="sPageChanged($event)"
+                                [boundaryLinks]="true"
+                                class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/图形分析区-->
